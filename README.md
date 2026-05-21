@@ -37,13 +37,7 @@ npx tsc --noEmit -p tsconfig.app.json --ignoreDeprecations 6.0
 | [`APPROACH.md`](APPROACH.md) | **Headline deliverable.** Approach + AI process + quality + demo plan. |
 | [`app/`](app/) | The prototype — React 18, TypeScript, Vite, Tailwind v4, Radix UI. |
 | [`app/README.md`](app/README.md) | App-specific run instructions and stack notes. |
-| [`docs/analysis/`](docs/analysis/) | Forensic analysis of the brief and the CSV — every persona quote mapped to a build requirement, every data anomaly catalogued. |
-| [`docs/spec/`](docs/spec/) | Implementation spec — file layout, domain model, rules engine API, page-by-page UI behaviour. |
-| [`docs/process-and-quality.md`](docs/process-and-quality.md) | Extended AI-process and verification notes (a summary lives in `APPROACH.md`). |
-| [`tasks/requirements-checklist.md`](tasks/requirements-checklist.md) | 100+ acceptance criteria, each citing either a brief quote or an analysis section. |
-| [`tasks/todo.md`](tasks/todo.md) | Build checklist. |
 | [`client_onboarding.csv`](client_onboarding.csv) | The seed data the brief provided (46 records, 4 branches). |
-| [`sample-import.csv`](sample-import.csv) | A 5-row CSV designed to exercise the bulk-import flow during the demo. |
 | [`sentinel-v2-problem-statement.md`](sentinel-v2-problem-statement.md) | The original brief, kept for reference. |
 
 ## Architectural shape (one paragraph)

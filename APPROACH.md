@@ -8,7 +8,7 @@
 
 > **Three-sentence summary.** The brief is a planted test. The compliance reference points directly at row 5 of the CSV ("A record showing a Politically Exposed Person classified as LOW risk is not a minor discrepancy — it is a material compliance failure" — CLT-005 is exactly that). The prototype surfaces it, plus eight other records that violate the firm's own rules, on first paint.
 
-**How to run:** `cd app && npm install && npm run dev`, then open `http://localhost:5173` at 1024×768. **Tests:** `cd app && npx vitest --run` → 153 passing. **Process & quality:** [`docs/process-and-quality.md`](docs/process-and-quality.md). **Deeper analysis & spec:** [`docs/analysis/`](docs/analysis/) and [`docs/spec/`](docs/spec/).
+**How to run:** `cd app && npm install && npm run dev`, then open `http://localhost:5173` at 1024×768. **Tests:** `cd app && npx vitest --run` → 153 passing.
 
 ---
 
@@ -178,15 +178,15 @@ The brief asks four architectural questions explicitly. Each one has a defensibl
 
 ## 7. Process — how I used the AI assistant
 
-The tool was Claude Code (the CLI agent). I directed it; it executed under structure I set. The full process write-up is at [`docs/process-and-quality.md`](docs/process-and-quality.md). The substance:
+The tool was Claude Code (the CLI agent). I directed it; it executed under structure I set. The substance:
 
 ### Prompting pattern
 
 **Slowed down before building.** The first ~30% of the session was deliberately not code. I made the model:
 
-1. Produce a forensic analysis of the brief — every persona quote mapped to a build requirement, every CSV row audited against the rules. Output at [`docs/analysis/`](docs/analysis/). This caught the 3 planted classification mismatches and surfaced 6 missing-field findings.
-2. Write an implementation spec — file layout, domain model, rules engine API, page-by-page UI. Output at [`docs/spec/`](docs/spec/).
-3. Build a requirements checklist with 100+ acceptance criteria, each citing either a brief quote or an analysis section. Output at [`tasks/requirements-checklist.md`](tasks/requirements-checklist.md). This became the contract the tests are written against.
+1. Produce a forensic analysis of the brief — every persona quote mapped to a build requirement, every CSV row audited against the rules. This caught the 3 planted classification mismatches and surfaced 6 missing-field findings.
+2. Write an implementation spec — file layout, domain model, rules engine API, page-by-page UI.
+3. Build a requirements checklist with 100+ acceptance criteria, each citing either a brief quote or an analysis section. This became the contract the tests are written against.
 
 After the analysis was approved, the build phase began under strict CLAUDE.md principles: **no comments**, clean architecture with ports + adapters, dependency injection at the composition root, strict TypeScript settings, named constants over magic numbers.
 
@@ -277,24 +277,17 @@ Subagent D enumerated which R-IDs the test suite covers (R1.x, R2.x, R3.x, R4.12
 ## 9. Where to look
 
 ```text
-APPROACH.md                 ← this document
-README.md                   ← run instructions live in app/README.md
-app/                        ← the prototype
-  src/domain/               ← pure logic + rules-as-data
-  src/adapters/             ← LocalStorage, CSV, system clock, etc.
-  src/application/          ← AssessmentService, FindingsService, ImportService
-  src/ui/                   ← React (pages, components, hooks, providers)
-  src/__tests__/            ← requirements-coverage suite
-docs/
-  approach.md               ← earlier draft of this document
-  process-and-quality.md    ← AI process + verification details
-  analysis/                 ← forensic read of the brief + CSV audit
-  spec/                     ← implementation spec
-tasks/
-  requirements-checklist.md ← 100+ acceptance criteria, each cited
-  todo.md                   ← build checklist (with review section)
-sample-import.csv           ← 5-row CSV designed to exercise the bulk-import flow
-client_onboarding.csv       ← the seed data
+APPROACH.md                       ← this document
+README.md                         ← repo overview
+app/                              ← the prototype
+  src/domain/                     ← pure logic + rules-as-data
+  src/adapters/                   ← LocalStorage, CSV, system clock, etc.
+  src/application/                ← AssessmentService, FindingsService, ImportService
+  src/ui/                         ← React (pages, components, hooks, providers)
+  src/__tests__/                  ← requirements-coverage suite
+  README.md                       ← run instructions and stack notes
+client_onboarding.csv             ← the seed data the brief provided
+sentinel-v2-problem-statement.md  ← the original brief
 ```
 
 ---
