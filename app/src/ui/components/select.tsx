@@ -4,8 +4,11 @@ import {
   type ElementRef,
 } from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import { cn, TAP_TARGET_MIN_HEIGHT } from '@/ui/components/utils';
+
+const SELECT_CONTENT_MAX_HEIGHT =
+  'max-h-[min(320px,var(--radix-select-content-available-height))]';
 
 const Select = SelectPrimitive.Root;
 const SelectValue = SelectPrimitive.Value;
@@ -36,6 +39,40 @@ const SelectTrigger = forwardRef<
 ));
 SelectTrigger.displayName = 'SelectTrigger';
 
+const SelectScrollUpButton = forwardRef<
+  ElementRef<typeof SelectPrimitive.ScrollUpButton>,
+  ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitive.ScrollUpButton
+    ref={ref}
+    className={cn(
+      'flex items-center justify-center py-1 bg-card text-neutral cursor-default',
+      className,
+    )}
+    {...props}
+  >
+    <ChevronUp className="h-4 w-4" aria-hidden="true" />
+  </SelectPrimitive.ScrollUpButton>
+));
+SelectScrollUpButton.displayName = 'SelectScrollUpButton';
+
+const SelectScrollDownButton = forwardRef<
+  ElementRef<typeof SelectPrimitive.ScrollDownButton>,
+  ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitive.ScrollDownButton
+    ref={ref}
+    className={cn(
+      'flex items-center justify-center py-1 bg-card text-neutral cursor-default',
+      className,
+    )}
+    {...props}
+  >
+    <ChevronDown className="h-4 w-4" aria-hidden="true" />
+  </SelectPrimitive.ScrollDownButton>
+));
+SelectScrollDownButton.displayName = 'SelectScrollDownButton';
+
 const SelectContent = forwardRef<
   ElementRef<typeof SelectPrimitive.Content>,
   ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
@@ -47,12 +84,15 @@ const SelectContent = forwardRef<
       className={cn(
         'surface-card z-50 min-w-[var(--radix-select-trigger-width)] overflow-hidden',
         'border border-neutral/15',
+        SELECT_CONTENT_MAX_HEIGHT,
         position === 'popper' && 'translate-y-1',
         className,
       )}
       {...props}
     >
+      <SelectScrollUpButton />
       <SelectPrimitive.Viewport className="p-1">{children}</SelectPrimitive.Viewport>
+      <SelectScrollDownButton />
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
 ));
@@ -112,4 +152,6 @@ export {
   SelectGroup,
   SelectLabel,
   SelectSeparator,
+  SelectScrollUpButton,
+  SelectScrollDownButton,
 };
